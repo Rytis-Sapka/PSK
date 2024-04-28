@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <head>
+        <title>books</title>
+    </head>
+    <style type="text/css">
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+            padding: 0;
+        }
+
+        h1, h3 {
+            color: #333;
+        }
+
+        .header ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        .header li {
+            float: left;
+        }
+
+        .header li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .header li a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .tabbed {
+            text-indent: 30px; /* Adjust size as needed */
+        }
+
+        #name, #pages, #takenDate, #library {
+            width: 300px; /* Ensures all inputs are the same width */
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        ol {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ol li {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 8px;
+            margin-bottom: 6px;
+            border-radius: 4px;
+        }
+
+        ol ol {
+            list-style-type: lower-alpha;
+        }
+    </style>
+    <h1>books</h1>
+    <div class="header">
+        <ul>
+            <li><h:link outcome="libraries">libraries</h:link></li>
+            <li><h:link outcome="books">books</h:link></li>
+            <li><h:link outcome="authors">authors</h:link></li>
+        </ul>
+    </div>
+</h:head>
+<f:view>
+    <h3>add new book:</h3>
+    <h:form>
+        <h:outputLabel for="name" value="Book Name:"/>
+        <br/>
+        <h:inputTextarea styleClass="inputField" id="name" value="#{books.bookToCreate.name}" required="true"/>
+        <br/>
+
+        <h:outputLabel for="pages" value="Page Count:"/>
+        <br/>
+        <h:inputText styleClass="inputField" id="pages" value="#{books.bookToCreate.pages}" required="true"/>
+        <br/>
+
+        <h:outputLabel for="takenDate" value="Taken Date:"/>
+        <br/>
+        <h:inputText id="takenDate" value="#{books.bookToCreate.checkOutDate}" required="false">
+            <f:convertDateTime pattern="yyyy-MM-dd"/>
+        </h:inputText>
+        <br/>
+
+        <h:outputLabel for="library" value="Select Library:"/>
+        <br/>
+        <h:selectOneListbox id="library" value="#{books.library}" required="true" size="1">
+            <f:selectItems value="#{libraries.allLibraries}" var="lib" itemLabel="#{lib.name}" itemValue="#{lib.id}" />
+        </h:selectOneListbox>
+        <br/>
+
+        <h:outputLabel for="authors" value="authors"/>
+        <br/>
+        <h:selectManyCheckbox id="authors" value="#{books.authors}" required="true" layout="pageDirection">
+            <f:selectItems value="#{authors.allAuthors}" var="author"
+                           itemLabel="#{author.name}" itemValue="#{author.id}"/>
+        </h:selectManyCheckbox>
+        <br/>
+
+        <h:commandButton value="Create book" actionListener="#{books.createBook}"
+                         action="books?faces-redirect=true"/>
+    </h:form>
+    <br/>
+    <h3>books</h3>
+    <ol>
+        <ui:repeat value="#{books.allBooks}" var="book">
+            <li>
+                <p>"#{book.name}", Library "#{book.library.name}", by:</p>
+                <ui:repeat value="#{book.authors}" var="author">
+                    <p class="tabbed">- #{author.name}</p>
+                </ui:repeat>
+                <h:outputText value="Estimated return date: " rendered="#{not empty book.estimatedReturnDate}"/>
+                <h:outputText value="#{book.estimatedReturnDate}" rendered="#{not empty book.estimatedReturnDate}">
+                    <f:converter converterId="javax.faces.DateTime" />
+                    <f:attribute name="pattern" value="dd MMMM yyyy" />
+                </h:outputText>
+                <h:outputText value="Available"
+                              rendered="#{empty book.estimatedReturnDate}" />
+            </li>
+        </ui:repeat>
+    </ol>
+</f:view>
+</html>
