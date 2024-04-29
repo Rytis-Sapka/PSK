@@ -130,6 +130,7 @@
                 <p>"#{book.name}", Library "#{book.library.name}", by:</p>
                 <ui:repeat value="#{book.authors}" var="author">
                     <p class="tabbed">- #{author.name}</p>
+                    <p> #{author.books.size()}</p>
                 </ui:repeat>
                 <h:outputText value="Estimated return date: " rendered="#{not empty book.estimatedReturnDate}"/>
                 <h:outputText value="#{book.estimatedReturnDate}" rendered="#{not empty book.estimatedReturnDate}">
