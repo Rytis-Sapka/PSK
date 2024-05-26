@@ -5,4 +5,16 @@
         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                       http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
         bean-discovery-mode="all">
+
+  <alternatives>
+    <class>services.SimpleReturnDateEstimationService</class>
+  </alternatives>
+
+  <interceptors>
+    <class>services.LoggingInterceptor</class>
+  </interceptors>
+
+  <decorators>
+    <class>services.AuthorDecorator</class>
+  </decorators>
 </beans>

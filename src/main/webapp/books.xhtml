@@ -137,8 +137,14 @@
                     <f:converter converterId="javax.faces.DateTime" />
                     <f:attribute name="pattern" value="dd MMMM yyyy" />
                 </h:outputText>
-                <h:outputText value="Available"
-                              rendered="#{empty book.estimatedReturnDate}" />
+                <h:outputText value="Available" rendered="#{empty book.estimatedReturnDate}" />
+
+                <!-- Update Book Name Form -->
+                <h:form>
+                    <h:messages globalOnly="true" showDetail="true" autoUpdate="true" />
+                    <h:inputText value="#{book.name}" />
+                    <h:commandButton value="Update Name" action="#{books.updateBook(book)}" />
+                </h:form>
             </li>
         </ui:repeat>
     </ol>

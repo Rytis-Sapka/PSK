@@ -1,6 +1,7 @@
 package persistence;
 
 import entities.Book;
+import services.LogInterceptor;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -8,6 +9,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 @ApplicationScoped
+@LogInterceptor
 public class BookDAO {
 
     @Inject

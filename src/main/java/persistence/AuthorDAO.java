@@ -1,6 +1,7 @@
 package persistence;
 
 import entities.Author;
+import services.IAuthorCreation;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -8,7 +9,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 @ApplicationScoped
-public class AuthorDAO {
+public class AuthorDAO implements IAuthorCreation {
 
     @Inject
     private EntityManager em;

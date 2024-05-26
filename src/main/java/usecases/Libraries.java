@@ -4,6 +4,7 @@ import entities.Library;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.LibraryDAO;
+import services.BookLoader;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
@@ -16,6 +17,10 @@ import java.util.List;
 public class Libraries implements Serializable {
     @Inject
     private LibraryDAO libraryDAO;
+
+    @Inject
+    @Getter
+    private BookLoader bookLoader;
 
     @Getter
     @Setter

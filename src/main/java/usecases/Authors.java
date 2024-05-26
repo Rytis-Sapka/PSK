@@ -1,9 +1,11 @@
 package usecases;
 
-import mybatis.model.Author;
+import entities.Author;
 import lombok.Getter;
 import lombok.Setter;
 import mybatis.dao.AuthorMapper;
+import persistence.AuthorDAO;
+import services.IAuthorCreation;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
@@ -15,7 +17,10 @@ import java.util.List;
 @Model
 public class Authors implements Serializable {
     @Inject
-    private AuthorMapper authorMapper;
+    private AuthorDAO authorDAO;
+
+    @Inject
+    private IAuthorCreation authorCreation;
 
     @Getter
     @Setter
@@ -31,10 +36,10 @@ public class Authors implements Serializable {
 
     @Transactional
     public void createAuthor() {
-        this.authorMapper.insert(authorToCreate);
+        this.authorCreation.save(authorToCreate);
     }
 
     private void loadAllAuthors() {
-        this.allAuthors = authorMapper.selectAll();
+        this.allAuthors = authorDAO.findAll();
     }
 }

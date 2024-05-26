@@ -3,11 +3,13 @@ package services;
 import entities.Book;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Alternative;
 import java.util.Calendar;
 import java.util.Date;
 
 @ApplicationScoped
-public class ReturnDateEstimationService {
+@Alternative
+public class ReturnDateEstimationService implements EstimationService {
     private static final int PAGES_PER_DAY = 25;
 
     public Date estimateReturnDate(Book book) {
